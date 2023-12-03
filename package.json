@@ -1,6 +1,6 @@
 {
   "name": "sqvaer",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Sqvaer makes parametrize queries more handy",
   "author": "Mickfault <mickfault@gmail.com>",
   "scripts": {

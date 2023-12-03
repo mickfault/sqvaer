@@ -2,38 +2,7 @@
 
 ## Usage:
 
-#### At first, let`s create simple wrapper, that provides convenient query interface
-```typescript
-// create postgres pool
-import { Statement } from "sqvaer";
-
-const pool = new Pool({
-    connectionString: 'postgres://user:pass@localhost:5432/db'
-});
-
-// prepare your own query interface
-async function query<T>(statement: Statement) {
-    const { rows, rowCount } = await pool.query<T>(statement);
-    return [rows, rowCount];
-}
-
-// also, we can create handy interface to interact with transactions
-export async function transaction() {
-    const connection = await pool.connect();
-    return {
-        begin: () => connection.query('BEGIN'),
-        commit: () => connection.query('COMMIT'),
-        rollback: () => connection.query('ROLLBACK'),
-        release: () => connection.release(),
-        query: async <T>(statement: Statement) => {
-            const { rows, rowCount } = await connection.query<T>(statement);
-            return [rows, rowCount];
-        },
-    };
-}
-```
-
-#### Simple statement:
+#### Basic statement:
 ```typescript
 import { sql } from "sqvaer";
 
@@ -84,34 +53,4 @@ if (conditions.length) {
 
 const [rows] = await query(statement)
 console.log(rows) // returns [ { name: 'Lotar', age: 19 } ]
-```
-
-#### Transactional statement:
-```typescript
-import { sql, transaction } from "sqvaer";
-
-const { begin, rollback, release, query } = await transaction()
-
-try {
-    await begin()
-    const params = {
-        id: 1,
-        age: 30
-    }
-    const statement = sql`UPDATE users SET age = ${params.age}`
-
-    if (params.id) {
-        statement.append(sql`WHERE id = ${params.id}`)
-    }
-
-    statement.append(sql`RETURNING *`)
-
-    const [rows] = await query(statement)
-    console.log(rows) // returns [ { id: 1, name: 'John', age: 30 } ]
-} catch (error) {
-    // handle error
-    await rollback()
-} finally {
-    await release()
-}
 ```
