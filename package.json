@@ -1,6 +1,6 @@
 {
   "name": "sqvaer",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Sqvaer makes parametrize queries more handy",
   "author": "Mickfault <mickfault@gmail.com>",
   "scripts": {
@@ -26,9 +26,9 @@
   "exports": "./dist/lib/index.js",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mikfault/sqvaer/issues"
+    "url": "https://github.com/mickfault/sqvaer/issues"
   },
-  "homepage": "https://github.com/mikfault/sqvaer#readme",
+  "homepage": "https://github.com/mickfault/sqvaer#readme",
   "devDependencies": {
     "@types/pg": "^8.6.5",
     "pg": "^8.8.0",
